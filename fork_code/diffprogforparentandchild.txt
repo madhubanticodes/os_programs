@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+
+int main()
+{
+  pid_t pid;
+  pid=fork();
+  if (pid<0)
+    printf("Child process could not be created");
+  else if(pid>0)
+    execlp("/bin/ls","ls",NULL);
+  else
+    execlp("/usr/bin/cal", "cal", NULL);
+  return 0;
+}
