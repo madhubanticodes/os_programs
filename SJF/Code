@@ -1,0 +1,55 @@
+#include<stdio.h>
+int main()
+{
+  int num,i,j;
+  int total=0;
+  int BT[50],WT[50],TAT[50],PR[50];
+  int temp,x;
+  float avWT,avTT;
+  printf("Enter number of processes: ");
+  scanf("%d",&num);
+  printf("Enter the Burst Time: ");
+  for(i=0;i<num;i++)
+  {
+    printf("PR%d:",i+1);
+    scanf("%d",&BT[i]);
+    PR[i]=i+1;
+  }
+  //SELECTION SORTING
+  for(i=0;i<num;i++)
+  {
+    x=i;
+    for(j=i+1;j<num;j++)
+    {
+      if(BT[j]<BT[x])
+      x=j;
+    }
+    temp=BT[i];
+    BT[i]=BT[x];
+    BT[x]=temp;
+    temp=PR[i];
+    PR[i]=PR[x];
+    PR[x]=temp;
+  }
+  WT[0]=0;
+  for(i=1;i<num;i++)
+  {
+    WT[i]=0;
+    for(j=0;j<i;j++)
+    WT[i]+=BT[j];
+    total+=WT[i];
+  }
+  avWT=(float)total/num;
+  total=0;
+  printf("\nProcess\t Burst_Time\t Waiting_Time\t TurnAround_Time");
+  for(i=0;i<num;i++)
+  {
+    TAT[i]=BT[i]+WT[i];
+    total+=TAT[i];
+    printf("\n\tp%d\t\t %d\t\t\t %d\t\t\t\t\t%d",PR[i],BT[i],WT[i],TAT[i]);
+  }
+  avTT=(float)total/num;
+  printf("\n\nAverage Waiting Time= %f",avWT);
+  printf("\nAverage Turn Around Time= %f\n",avTT);
+  return 0;
+}
