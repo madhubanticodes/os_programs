@@ -32,13 +32,13 @@ int main()
     tt=tt+TAT[i];
   }
   avTT=(float)tt/num;
-  printf("\nWaiting Time and Turn Around Time:\n\n");
+  printf("\nWaiting Time and Turn Around Time of the above processes is as follows:\n\n");
   for(i=1;i<=num;i++)
   {
-    printf("\nProcess %d:Waiting Time=%d,Turn Around Time=%d",i,WT[i],TAT[i]);
+    printf("\nProcess %d:Waiting Time= %d,Turn Around Time= %d",i,WT[i],TAT[i]);
   }
-  printf("\nAverage Waiting Time=%f",avWT);
-  printf("\nAverage Turn Around Time=%f",avTT);
+  printf("\nAverage Waiting Time= %f",avWT);
+  printf("\nAverage Turn Around Time= %f",avTT);
   return 0;
 }
 
