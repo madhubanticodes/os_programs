@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+int main(int argc, char *argv[])
+{
+  if (argc != 3)
+  {
+    fprintf(stderr, "Usage: ./main <src> <dest>\n");
+    return -1;
+  }
+
+  char buffer;
+  int count=0;
+  int fold, fnew;
+
+  if ((fold = open(argv[1], 0)) < 0)
+  {
+    fprintf(stderr, "Unable to read %s\n", argv[1]);
+    return 2;
+  }
+
+  if ((fnew = open(argv[2],0666)) < 0)
+  {
+    fprintf(stderr, "Unable to write %s\n", argv[2]);
+    return 2;
+  }
+
+  while ((count = read(fold, &buffer, 1)) > 0)
+    write(fnew, &buffer, 1);
+
+  if (count < 0)
+  {
+    fprintf(stderr, "Could not read contents of %s\n", argv[1]);
+    return 2;
+  }
+
+  if (count == 0)
+    write(fnew, "\n", 1);
+
+  printf("Copied from %s to %s\n", argv[1], argv[2]);
+
+  close(fold);
+  close(fnew);
+
+  if ((fnew= open(argv[2], 0)) < 0)
+  {
+    fprintf(stderr, "Could not read %s\n", argv[2]);
+    return 2;
+  }
+
+  while ((count = read(fold, &buffer, 1)) > 0)
+    printf("%c", buffer);
+
+  close(fnew);
+
+  return 0;
+}
